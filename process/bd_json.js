@@ -2,7 +2,14 @@ const fs = require("fs");
 const process = require("process");
 //cat > ${a}.json
 let statusBD=null;
-
+function getStatus(){
+  return JSON.parse(fs.readFileSync('./process/settings.json'));
+}
+function setStatus(namestatus){
+  const statusA= getStatus();
+  statusA.status=namestatus;
+  fs.writeFileSync('./process/settings.json', JSON.stringify(statusA));
+}
 function newBD(namebd){
   fs.mkdirSync(`./data/databases/${namebd}`);
 }
@@ -22,6 +29,7 @@ function newTable(nametable){
 module.exports={
   newBD,
   newTable,
-  statusBD
+  getStatus,
+  setStatus
 }
 
