@@ -1,6 +1,10 @@
 const fs = require("fs");
 const process = require("process");
 
+function creatdir(){
+  
+}
+
 function getStatus() {
   return JSON.parse(fs.readFileSync("./process/settings.json"));
 }
@@ -11,8 +15,20 @@ function setStatus(namestatus) {
   fs.writeFileSync("./process/settings.json", JSON.stringify(statusBD));
 }
 
-function newBD(namebd) {
-  fs.mkdirSync(`./data/databases/${namebd}`);
+function newBD(name) {
+  if(typeof(name)!=='string'){
+    console.log("ERROR BD: invalid data type.");
+  }else{
+    let namebd=name.trim().replace(/ /g, "_");
+    if(namebd===""){
+      console.log("ERROR BD: Invalid name")
+    }else if (fs.existsSync(`./data/databases/${namebd}`)) {
+      console.log("ERROR BD: db already exists.");
+    }  else {
+      fs.mkdirSync(`./data/databases/${namebd}`);
+    }
+  }
+  
 }
 
 function newTable(name) {
