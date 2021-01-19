@@ -2,7 +2,18 @@ const fs = require("fs");
 const process = require("process");
 
 function creatdir(){
-  
+  if(fs.existsSync("./data")){
+    if(fs.existsSync("./data/databases")){
+      return true;
+    }else{
+      fs.mkdirSync("./data/databases");
+      return false;
+    }
+  }else{
+    fs.mkdirSync("./data");
+    fs.mkdirSync("./data/databases");
+    return false;
+  }
 }
 
 function getStatus() {
@@ -16,6 +27,9 @@ function setStatus(namestatus) {
 }
 
 function newBD(name) {
+  if(!fs.existsSync("./data")||!fs.existsSync("./data/databases")){
+    creatdir();
+  }
   if(typeof(name)!=='string'){
     console.log("ERROR BD: invalid data type.");
   }else{
@@ -60,5 +74,5 @@ module.exports = {
   newBD,
   newTable,
   getStatus,
-  setStatus,
+  setStatus
 };
