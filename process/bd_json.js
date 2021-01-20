@@ -13,6 +13,14 @@ function vaParam(param){
     return paramready;
   }
 }
+function creatstatusjson(){
+  if(fs.existsSync("process/settings.json")){
+    return false;
+  }else{
+    fs.writeFileSync("process/settings.json",`{"status":null}`);
+    return true;
+  }
+}
 
 function creatdir(){
   if(fs.existsSync("./data")){
@@ -30,20 +38,23 @@ function creatdir(){
 }
 
 function getStatus() {
+  creatstatusjson();
   return JSON.parse(fs.readFileSync("./process/settings.json"));
 }
 
-function setStatus(namestatus) {
+function setStatus(name) {
   const statusBD = getStatus();
-  statusBD.status = namestatus;
-  fs.writeFileSync("./process/settings.json", JSON.stringify(statusBD));
+  let namestatus=vaParam(name);
+  if(!namestatus===false){
+    statusBD.status = namestatus;
+    fs.writeFileSync("./process/settings.json", JSON.stringify(statusBD));
+  }
+  
 }
 
 function newBD(name) {
   let namebd=vaParam(name);
-  if(!fs.existsSync("./data")||!fs.existsSync("./data/databases")){
-    creatdir();
-  }
+  creatdir();
   if(!namebd===false){
     if (fs.existsSync(`./data/databases/${namebd}`)) {
       console.log("ERROR BD: db already exists.");
@@ -77,5 +88,6 @@ module.exports = {
   newBD,
   newTable,
   getStatus,
-  setStatus
+  setStatus,
+  creatstatusjson
 };
