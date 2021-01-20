@@ -4,3 +4,4 @@ const { basename } = require('path');
 /* bd.newBD("regros");
 bd.statusBD="regros";
 bd.newTable("usuarios-nel") */
+bd.newTable(" asd  a sd asdasd");

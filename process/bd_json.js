@@ -1,6 +1,19 @@
 const fs = require("fs");
 const process = require("process");
 
+function vaParam(param){
+  if(typeof(param)!=='string'){
+    console.log("ERROR BD: invalid data type.");
+    return false;
+  }else if(param===""){
+    console.log("ERROR BD: Invalid name")
+    return false;
+  }else{
+    let paramready=param.trim().replace(/ /g, "_");
+    return paramready;
+  }
+}
+
 function creatdir(){
   if(fs.existsSync("./data")){
     if(fs.existsSync("./data/databases")){
@@ -27,33 +40,24 @@ function setStatus(namestatus) {
 }
 
 function newBD(name) {
+  let namebd=vaParam(name);
   if(!fs.existsSync("./data")||!fs.existsSync("./data/databases")){
     creatdir();
   }
-  if(typeof(name)!=='string'){
-    console.log("ERROR BD: invalid data type.");
-  }else{
-    let namebd=name.trim().replace(/ /g, "_");
-    if(namebd===""){
-      console.log("ERROR BD: Invalid name")
-    }else if (fs.existsSync(`./data/databases/${namebd}`)) {
+  if(!namebd===false){
+    if (fs.existsSync(`./data/databases/${namebd}`)) {
       console.log("ERROR BD: db already exists.");
-    }  else {
+    }else {
       fs.mkdirSync(`./data/databases/${namebd}`);
     }
   }
-  
 }
 
 function newTable(name) {
   let statusBD=getStatus().status;
-  if(typeof(name)!=='string'){
-    console.log("ERROR BD: invalid data type.");
-  }else{
-    let nametable=name.trim().replace(/ /g, "_");
-    if(nametable===""){
-      console.log("ERROR BD: Invalid name")
-    }else if (!fs.existsSync(`./data/databases/${statusBD}`)) {
+  let nametable=vaParam(name);
+  if(!nametable===false){
+    if (!fs.existsSync(`./data/databases/${statusBD}`)) {
       console.log("ERROR BD: not selected or not exist.");
     } else if (fs.existsSync(`./data/databases/${statusBD}/${nametable}.json`)) {
       console.log(`ERROR BD: ${statusBD}\n${nametable}.json already exists.`);
@@ -68,7 +72,6 @@ function newTable(name) {
       );
     }
   }
-  
 }
 module.exports = {
   newBD,
