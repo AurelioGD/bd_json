@@ -75,10 +75,10 @@ function newTable(name) {
     } else {
       fs.writeFile(
         `./data/databases/${statusBD}/${nametable}.json`,
-        "[]",
+        "{}",
         function (error) {
           if (error) console.log(error);
-          else console.log(`BD message: ${statusBD}\nTable created: ${nametable}`);
+          else console.log(`BD: ${statusBD}\nTable created: ${nametable}`);
         }
       );
     }
@@ -88,6 +88,5 @@ module.exports = {
   newBD,
   newTable,
   getStatus,
-  setStatus,
-  creatstatusjson
+  setStatus
 };
