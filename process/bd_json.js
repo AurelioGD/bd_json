@@ -1,50 +1,16 @@
 const fs = require("fs");
-const process = require("process");
+const va=require("./validations")
+const query=require("./query")
 
-function vaParam(param){
-  if(typeof(param)!=='string'){
-    console.log("ERROR BD: invalid data type.");
-    return false;
-  }else if(param===""){
-    console.log("ERROR BD: Invalid name")
-    return false;
-  }else{
-    let paramready=param.trim().replace(/ /g, "_");
-    return paramready;
-  }
-}
-function creatstatusjson(){
-  if(fs.existsSync("process/settings.json")){
-    return false;
-  }else{
-    fs.writeFileSync("process/settings.json",`{"status":null}`);
-    return true;
-  }
-}
-
-function creatdir(){
-  if(fs.existsSync("./data")){
-    if(fs.existsSync("./data/databases")){
-      return true;
-    }else{
-      fs.mkdirSync("./data/databases");
-      return false;
-    }
-  }else{
-    fs.mkdirSync("./data");
-    fs.mkdirSync("./data/databases");
-    return false;
-  }
-}
 
 function getStatus() {
-  creatstatusjson();
+  vs.creatstatusjson();
   return JSON.parse(fs.readFileSync("./process/settings.json"));
 }
 
 function setStatus(name) {
   const statusBD = getStatus();
-  let namestatus=vaParam(name);
+  let namestatus=va.vaParam(name);
   if(!namestatus===false){
     statusBD.status = namestatus;
     fs.writeFileSync("./process/settings.json", JSON.stringify(statusBD));
@@ -53,8 +19,8 @@ function setStatus(name) {
 }
 
 function newBD(name) {
-  let namebd=vaParam(name);
-  creatdir();
+  let namebd=va.vaParam(name);
+  va.creatdir();
   if(!namebd===false){
     if (fs.existsSync(`./data/databases/${namebd}`)) {
       console.log("ERROR BD: db already exists.");
@@ -66,7 +32,7 @@ function newBD(name) {
 
 function newTable(name) {
   let statusBD=getStatus().status;
-  let nametable=vaParam(name);
+  let nametable=va.vaParam(name);
   if(!nametable===false){
     if (!fs.existsSync(`./data/databases/${statusBD}`)) {
       console.log("ERROR BD: not selected or not exist.");
@@ -88,5 +54,6 @@ module.exports = {
   newBD,
   newTable,
   getStatus,
-  setStatus
+  setStatus,
+  query
 };
