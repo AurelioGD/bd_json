@@ -5,4 +5,4 @@ const { deepStrictEqual } = require('assert');
 /* bd.newBD("regros");
 bd.statusBD="regros";
 bd.newTable("usuarios-nel") */
-bd.query.Select("peliculas","year > 2020","year","description");
+bd.query.Select();
