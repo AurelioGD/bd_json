@@ -1,22 +1,8 @@
 const fs = require("fs");
 const va=require("./validations")
 const query=require("./query")
+const status=require("./status")
 
-
-function getStatus() {
-  vs.creatstatusjson();
-  return JSON.parse(fs.readFileSync("./process/settings.json"));
-}
-
-function setStatus(name) {
-  const statusBD = getStatus();
-  let namestatus=va.vaParam(name);
-  if(!namestatus===false){
-    statusBD.status = namestatus;
-    fs.writeFileSync("./process/settings.json", JSON.stringify(statusBD));
-  }
-  
-}
 
 function newBD(name) {
   let namebd=va.vaParam(name);
@@ -31,7 +17,7 @@ function newBD(name) {
 }
 
 function newTable(name) {
-  let statusBD=getStatus().status;
+  let statusBD=status.getStatus().status;
   let nametable=va.vaParam(name);
   if(!nametable===false){
     if (!fs.existsSync(`./data/databases/${statusBD}`)) {
@@ -50,10 +36,10 @@ function newTable(name) {
     }
   }
 }
+
 module.exports = {
   newBD,
   newTable,
-  getStatus,
-  setStatus,
-  query
+  query,
+  status
 };
