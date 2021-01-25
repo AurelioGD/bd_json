@@ -1,6 +1,6 @@
 const bd=require("./process/bd_json")
 
-console.log(bd.query.Select("peliculas","year > 2017","*"))
+console.log(bd.query.Select("peliculas","id == 3","title","description","year"))
 
 
 
