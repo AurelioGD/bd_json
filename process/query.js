@@ -7,7 +7,12 @@ function Select(table, condition, ...columns) {
         if (va.vaParam(table) && va.vaParam(condition)&&va.vaArrayString(columns)) {
             let newVaCondition = va.vaCondition(condition);
             if (newVaCondition) {
-              
+              if(columns[0]==="*"){
+                return vaQ.interModle(table,condition);
+              }else{
+                return vaQ.interModleWTs(table,condition,columns)
+                
+              }
             } else {
               console.log(
                 "ERROR SELECT: Format of the incorrect condition, Valid format: (Column to validate)(Space)(Relational operator)(Space)(Value to compare)"

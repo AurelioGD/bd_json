@@ -65,10 +65,20 @@ function vaCondition(condition) {
     return false;
   }
 }
+function cmplCondition(condition){
+  let newCondition = condition.split(" ");
+  if (newCondition.length === 3) {
+    return `${newCondition[1]}${newCondition[2]}`;
+  } else {
+    return false;
+  }
+}
 module.exports = {
   vaParam,
   creatstatusjson,
   creatdir,
   vaCondition,
   vaArrayString,
+  cmplCondition
+
 };
