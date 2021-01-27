@@ -36,8 +36,12 @@ function Select(table, condition, ...columns) {
     }
   }
 }
-function Insert(){
-
+function Insert(table,columns,values){
+  if(va.vaParam(table)&&va.vaArrayString(columns)&&va.vaArrayString(values)){
+    return vaQ.insertModle(table,columns,values);
+  }else{
+    console.log(`ERROR INSERT: incorret format, Valid format: bd.query.Insert("table",["columns","colunms"],["values",values])`);
+  }
 }
 function Update(){
   
@@ -63,5 +67,7 @@ function Delete(table, condition) {
 
 module.exports = {
   Select,
-  Delete
+  Delete,
+  Insert,
+  Update
 };

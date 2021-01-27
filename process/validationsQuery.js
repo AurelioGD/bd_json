@@ -118,10 +118,35 @@ function deleteModel(table,condition){
   }
 }
 
+function insertModle(table,columns,values){
+  if (!fs.existsSync(`./data/databases/${statusBD}`)) {
+    console.log("ERROR BD: not selected or not exist.");
+  } else if (fs.existsSync(`./data/databases/${statusBD}/${table}.json`)) {
+    let data = JSON.parse(
+      fs.readFileSync(`./data/databases/${statusBD}/${table}.json`)
+    );
+    let newdata={}
+    for(let c=0;c<columns.length;c++){
+      if(c===0){
+        newdata['id']=`${data.length+1}`;
+      }
+      newdata[columns[c]]=values[c];
+    }
+    data.push(newdata);
+    fs.writeFileSync(`./data/databases/${statusBD}/${table}.json`,JSON.stringify(data));
+    return "Los datos se insertaron correctamente...";
+
+
+
+  }
+  
+}
+
 module.exports = {
   basicModel,
   basicModelWC,
   interModle,
   interModleWTs,
-  deleteModel
+  deleteModel,
+  insertModle
 };
