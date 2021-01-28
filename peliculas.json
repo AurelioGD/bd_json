@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "title": "Zona de riesgo",
+    "year": "2021",
+    "IMDb": "5.3",
+    "description": "Un piloto de drones se une a un oficial androide para localizar un dispositivo que amenaza con acabar con la vida sobre el planeta. El dispositivo en cuestión se encuentra oculto en una zona altamente militarizada.",
+    "director": "Mikael Håfström"
+  },
+  {
+    "id": "2",
+    "title": "Borning: Asfalto en llamas",
+    "year": "2020",
+    "IMDb": "5.1",
+    "description": "La tercera y última entrega de la trilogía Burnout. Esta vez, la carretera atraviesa Noruega, Suecia, Dinamarca y finalmente Alemania para correr en la famosa pista de carreras, Nürburgring.",
+    "director": "Hallvard Bræin"
+  },
+  {
+    "id": "3",
+    "title": "Una oración antes del amanecer",
+    "year": "2017",
+    "IMDb": "6.9",
+    "description": "La verdadera historia del boxeador inglés Billy Moore que termina encarcelado en una de las prisiones más notorias de Tailandia, donde lucha en torneos de Muay Thai para ganar su libertad.",
+    "director": "Jean-Stéphane Sauvaire"
+  },
+  {
+    "id": "4",
+    "title": "Sightless",
+    "year": "2020",
+    "IMDb": "5.5",
+    "description": "Después de que un ataque la deja ciega, Ellen se retira del mundo para recuperarse. Pero pronto se sumerge en la paranoia, incapaz de convencer a nadie de que su agresor ha vuelto para aterrorizarla ocultándose a plena vista.",
+    "director": "Cooper Karl"
+  }
+]

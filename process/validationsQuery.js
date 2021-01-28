@@ -41,25 +41,15 @@ function interModle(table, condition) {
     let data = JSON.parse(
       fs.readFileSync(`./data/databases/${statusBD}/${table}.json`)
     );
-    let newdata = [];
-    let ci = 0;
     let getparam = va.vaCondition(condition);
     let framcondition = va.cmplCondition(condition);
-    for (let i = 0; i < data.length; i++) {
-      let param = data[i][getparam];
-      if (eval(`${param}${framcondition}`)) {
-        newdata.push({});
-
-        for (let prop in data[i]) {
-          /* if(columns[c]===prop){
-                  newdata[i][prop]=data[i][prop]
-              } */
-          newdata[ci][prop] = data[i][prop];
-        }
-        ci++;
+    let newadata=data.filter(function(el){
+      let param = el[getparam];
+      if(eval(`${param}${framcondition}`)){
+        return el;
       }
-    }
-    return newdata;
+    })
+    return newadata;
   }
 }
 function interModleWTs(table, condition, columns) {
@@ -136,11 +126,11 @@ function insertModle(table,columns,values){
     fs.writeFileSync(`./data/databases/${statusBD}/${table}.json`,JSON.stringify(data));
     return "Los datos se insertaron correctamente...";
 
-
-
   }
   
 }
+
+
 
 module.exports = {
   basicModel,
