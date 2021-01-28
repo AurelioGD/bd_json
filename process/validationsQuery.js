@@ -43,13 +43,13 @@ function interModle(table, condition) {
     );
     let getparam = va.vaCondition(condition);
     let framcondition = va.cmplCondition(condition);
-    let newadata=data.filter(function(el){
+    let newdata=data.filter(function(el){
       let param = el[getparam];
       if(eval(`${param}${framcondition}`)){
         return el;
       }
     })
-    return newadata;
+    return newdata;
   }
 }
 function interModleWTs(table, condition, columns) {
@@ -118,6 +118,7 @@ function insertModle(table,columns,values){
     let newdata={}
     for(let c=0;c<columns.length;c++){
       if(c===0){
+        
         newdata['id']=`${data.length+1}`;
       }
       newdata[columns[c]]=values[c];
@@ -130,6 +131,34 @@ function insertModle(table,columns,values){
   
 }
 
+function updateModle(table,condition,columns,values){
+  if (!fs.existsSync(`./data/databases/${statusBD}`)) {
+    console.log("ERROR BD: not selected or not exist.");
+  } else if (fs.existsSync(`./data/databases/${statusBD}/${table}.json`)) {
+    let data = JSON.parse(
+      fs.readFileSync(`./data/databases/${statusBD}/${table}.json`)
+    );
+    let i=0;
+    let getparam = va.vaCondition(condition);
+    let framcondition = va.cmplCondition(condition);
+    let newdata=data.filter(function(el){
+      let param = el[getparam];
+      if(eval(`${param}${framcondition}`)){
+        for(let colum of columns){
+          el[colum]=values[i];
+          i++;
+        }
+        return el;
+      }
+      return el;
+    })
+    fs.writeFileSync(`./data/databases/${statusBD}/${table}.json`,JSON.stringify(newdata));
+    console.log("Se actualizo la tabla correctamente")
+  }
+
+  
+}
+
 
 
 module.exports = {
@@ -138,5 +167,6 @@ module.exports = {
   interModle,
   interModleWTs,
   deleteModel,
-  insertModle
+  insertModle,
+  updateModle
 };

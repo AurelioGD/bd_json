@@ -43,8 +43,32 @@ function Insert(table,columns,values){
     console.log(`ERROR INSERT: incorret format, Valid format: bd.query.Insert("table",["columns","colunms"],["values",values])`);
   }
 }
-function Update(){
-  
+function Update(table,condition,columns,values){
+  if (condition) {
+    if (va.vaParam(table) &&va.vaParam(condition) &&va.vaArrayString(columns)&&va.vaArrayString(values)) {
+      let newVaCondition = va.vaCondition(condition);
+      if (newVaCondition) {
+          vaQ.updateModle(table,condition,columns,values);
+      } else {
+        console.log(`ERROR UPDATE: incorret format, Valid format: bd.query.Update("table","condition",["columns","colunms"],["values",values])`);
+        console.log(
+          "Basic format of the condition: (Column to validate)(Space)(Relational operator)(Space)(Value to compare)"
+        );
+      }
+    }
+  } else {
+    if (va.vaParam(table) && va.vaArrayString(columns)) {
+      if (columns[0] === "*") {
+        return vaQ.basicModel(table);
+      } else {
+        return vaQ.basicModelWC(table, columns);
+      }
+    } else {
+      console.log(
+        "ERROR SELECT: Format of the incorrect condition, Valid format: (Column to validate)(Space)(Relational operator)(Space)(Value to compare)"
+      );
+    }
+  }
 }
 function Delete(table, condition) {
   if (condition) {

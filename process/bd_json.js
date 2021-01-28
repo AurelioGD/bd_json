@@ -1,7 +1,8 @@
 const fs = require("fs");
 const va=require("./validations")
 const query=require("./query")
-const status=require("./status")
+const status=require("./status");
+const rimraf=require("rimraf")
 
 
 function newBD(name) {
@@ -27,7 +28,7 @@ function newTable(name) {
     } else {
       fs.writeFile(
         `./data/databases/${statusBD}/${nametable}.json`,
-        "{}",
+        "[]",
         function (error) {
           if (error) console.log(error);
           else console.log(`BD: ${statusBD}\nTable created: ${nametable}`);
@@ -36,10 +37,25 @@ function newTable(name) {
     }
   }
 }
+function deleteBD(namebd){
+  if(va.vaParam(namebd)&&fs.existsSync(`./data/databases/${namebd}`)){
+    rimraf.sync(`./data/databases/${namebd}`)
+    console.log("Database was deleted successfully..")
+  }
+}
+function deleteTable(nameTable){
+  let statusBD=status.getStatus().status;
+  if(va.vaParam(nameTable)&&fs.existsSync(`./data/databases/${statusBD}/${nameTable}.json`)){
+    fs.unlinkSync(`./data/databases/${statusBD}/${nameTable}.json`)
+    console.log("The table was deleted successfully..")
+  }
+}
 
 module.exports = {
   newBD,
   newTable,
+  deleteBD,
+  deleteTable,
   query,
   status
 };
